@@ -1,0 +1,56 @@
+﻿@using Microsoft.AspNet.Identity
+@model PEPS.Models.HistoricalStock
+@{
+    ViewBag.Title = "Default";
+}
+<h2>@ViewBag.Title</h2>
+
+<div ng-app="default-app-management">
+    <!-- Print caracteristics of the product -->
+
+    <!-- Get a date and price the product -->
+    <div ng-controller="PriceController">
+        <form name="dateForm">
+            <input type="date" ng-model="datePrice" min="2014-12-12" max="2018-12-14" required />
+            <button class="btn btn-primary" ng-disabled="dateForm.$invalid" ng-click="price(datePrice)">Price</button>
+            <!-- Print price if requested and price date is valid -->
+            <h4 ng-show="isPriced && dateForm.$valid"> Price at date {{datePrice | date: yyyy-MM-dd }} : {{price || currrency}} </h4>
+         </form>
+
+    </div>
+    <!-- Draw charts of indices -->
+        <div ng-controller="IndicesController">
+            <div class="row">
+                <div class="span9">
+                    <div class="row">
+                        <highchart class="chart" config="chartConfig"></highchart>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="print-indices">
+                <ul>
+                    <li ng-repeat="indice in indices">
+                        Id = {{indice.id}}
+                        Name = {{indice.name}}
+                        <ul>
+                            <li ng-repeat="price in indice.prices">
+                                {{price[0] | date:'yyyy-MM-dd' }} : {{price[1] | currency }}
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div> <!--END DIV DEFAULT MANAGEMENT-->
+
+
+
+@section scripts {
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/Scripts/highstock.js"></script>
+    <script src="~/Scripts/highcharts-ng.js"></script>
+    <script src="~/App/app-default.js"></script>
+}
+

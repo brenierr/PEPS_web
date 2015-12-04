@@ -1,0 +1,19 @@
+﻿@using Microsoft.AspNet.Identity
+@model PEPS.Models.HistoricalStock
+
+@{
+    ViewBag.Title = "HistoricalStock";
+}
+<div ng-app="app-historical-datas">
+    <div ng-controller="HistoricalStockController">
+        <p ng-repeat="historicalStock in historicalStocks">
+            {{historicalStock.Date | ctime | date:'yyyy-MM-dd' }}
+            {{historicalStock.Close}}
+        </p>
+    </div>
+</div>
+
+@section scripts {
+<script src="~/Scripts/angular.min.js"></script>
+<script src="~/App/app-historical-datas.js"></script>
+}
